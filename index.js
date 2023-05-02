@@ -40,8 +40,11 @@ async function connect() {
 
 app.post("/api/points", (req, res) => {
   const points = req.body.amount;
+  console.log("🚀 ~ file: index.js:43 ~ app.post ~ points:", points)
   const type = req.body.type;
+  console.log("🚀 ~ file: index.js:44 ~ app.post ~ type:", type)
   const uid = req.body.uid;
+  console.log("🚀 ~ file: index.js:45 ~ app.post ~ uid:", uid)
 
   // Your code to handle the data
 
@@ -68,7 +71,6 @@ app.post("/api/points", (req, res) => {
 
 app.get("/api/points/:uid", (req, res) => {
   const { uid } = req.params;
-  console.log("🚀 ~ file: index.js:73 ~ app.get ~ uid:", uid);
 
   Data.findOne({ uid })
     .then((doc) => {
