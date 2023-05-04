@@ -9,7 +9,7 @@ require("dotenv").config();
 const app = express();
 
 // const corsOptions = {
-//   origin: "http://localhost",
+//   origin: "http://localhost:8100",
 // };
 
 app.use(cors());
@@ -76,9 +76,10 @@ app.get("/api/points/:uid", (req, res) => {
   Data.findOne({ uid })
     .then((doc) => {
       if (doc) {
+        console.log("🚀 ~ file: index.js:79 ~ .then ~ doc:", doc)
         res.json(doc);
       } else {
-        console.log(1);
+        console.log(404);
         res.status(404).send("Record not found");
       }
     })
