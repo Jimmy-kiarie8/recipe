@@ -8,11 +8,12 @@ require("dotenv").config();
 
 const app = express();
 
-const corsOptions = {
-  origin: "http://localhost",
-};
+// const corsOptions = {
+//   origin: "http://localhost",
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
+// app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 const server = http.createServer(app);
