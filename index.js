@@ -65,6 +65,7 @@ app.post("/api/points", (req, res) => {
     })
     .catch((err) => {
       console.error(err);
+      return res.status(500).send("Server error");
     });
 
   return true;
@@ -77,16 +78,22 @@ app.get("/api/points/:uid", (req, res) => {
     .then((doc) => {
       if (doc) {
         console.log("🚀 ~ file: index.js:79 ~ .then ~ doc:", doc)
-        res.json(doc);
+        return res.json(doc);
       } else {
         console.log(404);
-        res.status(404).send("Record not found");
+        return res.status(404).send("Record not found");
       }
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).send("Server error");
+      return res.status(500).send("Server error");
     });
+});
+
+
+
+app.get("/api/init", (req, res) => {
+  return;
 });
 
 // Define API endpoint to decrement points for a document
@@ -97,11 +104,11 @@ app.patch("/api/points/:id", (req, res) => {
   // Find the document by UID and decrement the points
   Data.findOneAndUpdate({ uid }, { $inc: { points: -pointsToDecrement } }, { new: true })
     .then((data) => {
-      res.json(data);
+      return res.json(data);
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).json({ error: err });
+      return res.status(500).json({ error: err });
     });
 });
 
