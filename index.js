@@ -23,9 +23,7 @@ const Data = require("./models/data.js");
 connect();
 
 // start the server
-server.listen(8080, () => {
-  console.log("Server started on port 8080");
-});
+server.listen(8080, () => {});
 
 async function connect() {
   try {
@@ -41,11 +39,8 @@ async function connect() {
 
 app.post("/api/points", (req, res) => {
   const points = req.body.amount;
-  console.log("🚀 ~ file: index.js:43 ~ app.post ~ points:", points)
   const type = req.body.type;
-  console.log("🚀 ~ file: index.js:44 ~ app.post ~ type:", type)
   const uid = req.body.uid;
-  console.log("🚀 ~ file: index.js:45 ~ app.post ~ uid:", uid)
 
   // Your code to handle the data
 
@@ -61,7 +56,6 @@ app.post("/api/points", (req, res) => {
     { upsert: true, new: true }
   )
     .then((doc) => {
-      console.log("Record updated or created:", doc);
     })
     .catch((err) => {
       console.error(err);
@@ -77,10 +71,8 @@ app.get("/api/points/:uid", (req, res) => {
   Data.findOne({ uid })
     .then((doc) => {
       if (doc) {
-        console.log("🚀 ~ file: index.js:79 ~ .then ~ doc:", doc)
         return res.json(doc);
       } else {
-        console.log(404);
         return res.status(404).send("Record not found");
       }
     })
@@ -89,8 +81,6 @@ app.get("/api/points/:uid", (req, res) => {
       return res.status(500).send("Server error");
     });
 });
-
-
 
 app.get("/api/init", (req, res) => {
   return;
@@ -102,7 +92,11 @@ app.patch("/api/points/:id", (req, res) => {
   const pointsToDecrement = req.body.points;
 
   // Find the document by UID and decrement the points
-  Data.findOneAndUpdate({ uid }, { $inc: { points: -pointsToDecrement } }, { new: true })
+  Data.findOneAndUpdate(
+    { uid },
+    { $inc: { points: -pointsToDecrement } },
+    { new: true }
+  )
     .then((data) => {
       return res.json(data);
     })
